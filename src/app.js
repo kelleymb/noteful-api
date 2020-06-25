@@ -17,8 +17,8 @@ app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 
-app.use('/api/notes', notesRouter)
-app.use('/api/folders', foldersRouter)
+app.use('/notes', notesRouter)
+app.use('/folders', foldersRouter)
 
 app.use(function errorHandler(error, req, res, next) {
     let response
