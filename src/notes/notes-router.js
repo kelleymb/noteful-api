@@ -20,6 +20,7 @@ notesRouter
     .get((req, res, next) => {
         const knexInstance = req.app.get('db')
         console.log(knexInstance)
+        
         NotesService.getAllNotes(knexInstance)
             .then(notes => {
                 res.json(notes.map(serializeNote))
@@ -27,14 +28,16 @@ notesRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { name, content } = req.body
-        const newNote = { name, content }
+        const db = req.app.get('db')
+        const { name, content, folder_id } = req.body
+        const newNote = { name, content, folder_id }
 
         for (const [key, value] of Object.entries(newNote))
             if (value == null)
                 return res.status(400).json({
                     error: { message: `Missing '${key}' in request body` }
                 })
+        
         NotesService.insertNote(
             req.app.get('db'),
             newNote
@@ -68,6 +71,7 @@ notesRouter
         res.json(serializeNote(res.note))
     })
     .delete((req, res, next) => {
+        
         NotesService.deleteNote(
             req,app.get('db'),
             req.params.id
