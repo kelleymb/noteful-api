@@ -28,12 +28,11 @@ notesRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const db = req.app.get('db')
         const { name, content, folder_id } = req.body
         const newNote = { name, content, folder_id }
 
         for (const [key, value] of Object.entries(newNote))
-            if (value == null)
+            if (value === null)
                 return res.status(400).json({
                     error: { message: `Missing '${key}' in request body` }
                 })
