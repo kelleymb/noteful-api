@@ -75,7 +75,7 @@ notesRouter
             req.app.get('db'),
             req.params.note_id
         )
-        console.log(req.params.note_id)
+        
         .then(numRowsAffected => {
             res.status(204).end()
         })
