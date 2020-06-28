@@ -55,7 +55,7 @@ notesRouter
     .all((req, res, next) => {
         NotesService.getById(
             req.app.get('db'),
-            req.params.id
+            req.params.note_id
         )
         .then(note => {
             if (!note) {
@@ -70,11 +70,12 @@ notesRouter
         res.json(serializeNote(res.note))
     })
     .delete((req, res, next) => {
-        
+
         NotesService.deleteNote(
             req.app.get('db'),
-            req.params.id
+            req.params.note_id
         )
+        console.log(req.params.note_id)
         .then(numRowsAffected => {
             res.status(204).end()
         })
