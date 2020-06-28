@@ -62,6 +62,8 @@ notesRouter
                 return res.status(404).json({
                     error: { message: `Note does not exist` }
                 })
+            } else {
+                next()
             }
         })
         .catch(next)
